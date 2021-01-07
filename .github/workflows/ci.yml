@@ -1,12 +1,13 @@
 name: CI
 on: [push, pull_request]
 jobs:
+
   test-elixir:
     runs-on: ubuntu-latest
     if: contains(toJson(github.event.commits), '[ci skip]') == false && contains(toJson(github.event.commits), '[skip ci]') == false
     env:
       FORCE_COLOR: 1
-    
+
     strategy:
       fail-fast: false
       max-parallel: 1
@@ -22,12 +23,13 @@ jobs:
         run: "sudo /bin/sh -c 'wget https://github.com/earthly/earthly/releases/download/v0.4.1/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'"
       - name: Execute tests
         run: earthly --build-arg ELIXIR=${{ matrix.elixir }}  --build-arg OTP=${{ matrix.otp }} +test
+
   integration-test-elixir:
     runs-on: ubuntu-latest
     if: contains(toJson(github.event.commits), '[ci skip]') == false && contains(toJson(github.event.commits), '[skip ci]') == false
     env:
       FORCE_COLOR: 1
-    
+
     strategy:
       fail-fast: false
       matrix:
@@ -42,6 +44,7 @@ jobs:
         run: "sudo /bin/sh -c 'wget https://github.com/earthly/earthly/releases/download/v0.4.1/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'"
       - name: Execute tests
         run: earthly -P --build-arg ELIXIR=${{ matrix.elixir }}  --build-arg OTP=${{ matrix.otp }} +integration-test
+
   npm_test:
     name: npm
     runs-on: ubuntu-latest
