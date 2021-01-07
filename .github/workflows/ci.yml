@@ -24,7 +24,7 @@ jobs:
       - name: Execute tests
         run: earthly --build-arg ELIXIR=${{ matrix.elixir }}  --build-arg OTP=${{ matrix.otp }} +test
 
-  integration-test-elixir:
+  test-integration-elixir:
     runs-on: ubuntu-latest
     if: contains(toJson(github.event.commits), '[ci skip]') == false && contains(toJson(github.event.commits), '[skip ci]') == false
     env:
@@ -45,7 +45,7 @@ jobs:
       - name: Execute tests
         run: earthly -P --build-arg ELIXIR=${{ matrix.elixir }}  --build-arg OTP=${{ matrix.otp }} +integration-test
 
-  npm_test:
+  test-npm:
     name: npm
     runs-on: ubuntu-latest
     if: contains(toJson(github.event.commits), '[ci skip]') == false && contains(toJson(github.event.commits), '[skip ci]') == false
