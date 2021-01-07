@@ -3,6 +3,7 @@ on: [push, pull_request]
 jobs:
   test-elixir:
     runs-on: ubuntu-latest
+    if: contains(toJson(github.event.commits), '[ci skip]') == false && contains(toJson(github.event.commits), '[skip ci]') == false
     env:
       FORCE_COLOR: 1
     
