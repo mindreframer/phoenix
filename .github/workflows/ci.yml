@@ -24,6 +24,7 @@ jobs:
         run: earthly --build-arg ELIXIR=${{ matrix.elixir }}  --build-arg OTP=${{ matrix.otp }} +test
   integration-test-elixir:
     runs-on: ubuntu-latest
+    if: contains(toJson(github.event.commits), '[ci skip]') == false && contains(toJson(github.event.commits), '[skip ci]') == false
     env:
       FORCE_COLOR: 1
     
@@ -44,6 +45,7 @@ jobs:
   npm_test:
     name: npm
     runs-on: ubuntu-latest
+    if: contains(toJson(github.event.commits), '[ci skip]') == false && contains(toJson(github.event.commits), '[skip ci]') == false
     steps:
       - uses: actions/checkout@v2
       - name: Download released earth
